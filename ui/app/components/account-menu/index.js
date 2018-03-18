@@ -89,6 +89,11 @@ AccountMenu.prototype.render = function () {
       icon: h('img.account-menu__item-icon', { src: 'images/import-account.svg' }),
       text: t('importAccount'),
     }),
+    h(Item, {
+      onClick: () => showNewAccountPage('CONNECT'),
+      icon: h('img.account-menu__item-icon', { src: 'images/import-account.svg' }),
+      text: t('connectHardwareWallet'),
+    }),
     h(Divider),
     h(Item, {
       onClick: showInfoPage,

@@ -8,6 +8,7 @@ const { getCurrentViewContext } = require('../../selectors')
 const classnames = require('classnames')
 
 const NewAccountCreateForm = require('./create-form')
+const ConnectHardwareForm = require('./connect-hardware')
 const NewAccountImportForm = require('../import')
 
 function mapStateToProps (state) {
@@ -66,6 +67,14 @@ AccountDetailsModal.prototype.render = function () {
           onClick: () => displayForm('IMPORT'),
         }, t('import')),
 
+        h('div.new-account__tabs__tab', {
+          className: classnames('new-account__tabs__tab', {
+            'new-account__tabs__selected': displayedForm === 'CONNECT',
+            'new-account__tabs__unselected cursor-pointer': displayedForm !== 'CONNECT',
+          }),
+          onClick: () => displayForm('CONNECT'),
+        }, t('connect')),
+
       ]),
 
     ]),
@@ -74,7 +83,9 @@ AccountDetailsModal.prototype.render = function () {
 
       displayedForm === 'CREATE'
         ? h(NewAccountCreateForm)
-        : h(NewAccountImportForm),
+        : (displayedForm === 'IMPORT')
+        ? h(NewAccountImportForm)
+        : h(ConnectHardwareForm),
 
     ]),
 

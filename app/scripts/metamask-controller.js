@@ -349,6 +349,7 @@ module.exports = class MetamaskController extends EventEmitter {
       clearSeedWordCache: this.clearSeedWordCache.bind(this),
       resetAccount: this.resetAccount.bind(this),
       importAccountWithStrategy: this.importAccountWithStrategy.bind(this),
+      connectLedgerWallet: this.connectLedgerWallet.bind(this),
 
       // vault management
       submitPassword: nodeify(keyringController.submitPassword, keyringController),
@@ -654,6 +655,15 @@ module.exports = class MetamaskController extends EventEmitter {
       return this.keyringController.addNewKeyring('Simple Key Pair', [ privateKey ])
     })
     .then(keyring => keyring.getAccounts())
+    .then((accounts) => this.preferencesController.setSelectedAddress(accounts[0]))
+    .then(() => { cb(null, this.keyringController.fullUpdate()) })
+    .catch((reason) => { cb(reason) })
+  }
+
+  connectLedgerWallet (cb) {
+    console.log('Connecting to Ledger Wallet')
+    this.keyringController.addNewKeyring('Ledger Hardware Keyring', {})
+    .then(keyring => keyring.addAccounts())
     .then((accounts) => this.preferencesController.setSelectedAddress(accounts[0]))
     .then(() => { cb(null, this.keyringController.fullUpdate()) })
     .catch((reason) => { cb(reason) })

@@ -70,6 +70,7 @@ var actions = {
   addNewKeyring,
   importNewAccount,
   addNewAccount,
+  connectLedgerWallet,
   NEW_ACCOUNT_SCREEN: 'NEW_ACCOUNT_SCREEN',
   navigateToNewAccountScreen,
   resetAccount,
@@ -529,6 +530,28 @@ function addNewAccount () {
     })
   }
 }
+
+function connectLedgerWallet () {
+  return (dispatch) => {
+    console.log('actions.connectLedgerWallet')
+    dispatch(actions.showLoadingIndication('This may take a while, be patient.'))
+    log.debug(`background.connectLedgerWallet`)
+    return new Promise((resolve, reject) => {
+      background.connectLedgerWallet((err, newAddress) => {
+        if (err) {
+          dispatch(actions.displayWarning(err.message))
+          return reject(err)
+        }
+        log.debug(`background.getState`)
+        forceUpdateMetamaskState(dispatch).then(() => {
+          dispatch(actions.hideLoadingIndication())
+          dispatch(actions.showAccountDetail(newAddress))
+        }).then(() => resolve(newAddress), reject)
+      })
+    })
+  }
+}
+
 
 function showInfoPage () {
   return {

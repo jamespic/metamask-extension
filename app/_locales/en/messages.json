@@ -104,6 +104,12 @@
   "confirmTransaction": {
     "message": "Confirm Transaction"
   },
+  "connectHardwareWallet": {
+    "message": "Connect Hardware Wallet"
+  },
+  "connect": {
+    "message": "Connect"
+  },
   "continue": {
     "message": "Continue"
   },
@@ -173,7 +179,7 @@
   },
   "decimal": {
     "message": "Decimals of Precision"
-  }, 
+  },
   "defaultNetwork": {
     "message": "The default network for Ether transactions is Main Net."
   },
@@ -800,7 +806,7 @@
   },
   "visitWebSite": {
     "message": "Visit our web site"
-  }, 
+  },
   "warning": {
     "message": "Warning"
   },
